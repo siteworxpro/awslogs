@@ -24,7 +24,7 @@ if 'bdist_wheel' not in sys.argv and sys.version_info < (2, 7):
 setup(
     name='awslogs',
     version='0.10.0',
-    url='https://github.com/jorgebastida/awslogs',
+    url='https://github.com/siteworxpro/awslogs',
     license='BSD',
     author='Jorge Bastida',
     author_email='me@jorgebastida.com',

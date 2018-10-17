@@ -54,6 +54,7 @@ class AWSLogs(object):
         if self.query is not None:
             self.query_expression = jmespath.compile(self.query)
         self.log_group_prefix = kwargs.get('log_group_prefix')
+        self.query_indent = kwargs.get('query_indent')
         self.client = boto3.client(
             'logs',
             aws_access_key_id=self.aws_access_key_id,
@@ -122,16 +123,30 @@ class AWSLogs(object):
 
             while True:
                 response = self.client.filter_log_events(**kwargs)
+                events = response.get('events', [])
 
-                for event in response.get('events', []):
+                for event in events:
                     if event['eventId'] not in interleaving_sanity:
                         interleaving_sanity.append(event['eventId'])
                         yield event
 
                 if 'nextToken' in response:
                     kwargs['nextToken'] = response['nextToken']
+                    continue
+
+                if self.watch:
+                    time.sleep(1)
+                    if 'nextToken' in kwargs:
+                        del kwargs['nextToken']
+
+                    if events:
+                        kwargs['startTime'] = max(
+                            event['timestamp'] for event in events
+                        )
+                        assert kwargs['startTime'] == events[-1]['timestamp']
+
                 else:
-                    yield do_wait
+                    raise StopIteration
 
         def consumer():
             for event in generator():
@@ -179,7 +194,7 @@ class AWSLogs(object):
                     parsed = json.loads(event['message'])
                     message = self.query_expression.search(parsed)
                     if not isinstance(message, six.string_types):
-                        message = json.dumps(message)
+                        message = json.dumps(message, indent=self.query_indent)
                 output.append(message.rstrip())
 
                 print(' '.join(output))

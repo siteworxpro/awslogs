@@ -20,7 +20,7 @@ def main(argv=None):
 
     argv = (argv or sys.argv)[1:]
 
-    parser = argparse.ArgumentParser(usage=("%(prog)s [ get | groups | streams ]"))
+    parser = argparse.ArgumentParser(usage="%(prog)s [ get | groups | streams ]")
     parser.add_argument("--version", action="version",
                         version="%(prog)s " + __version__)
 
@@ -133,6 +133,13 @@ def main(argv=None):
                             action="store",
                             dest="query",
                             help="JMESPath query to use in filtering the response data")
+
+    get_parser.add_argument("-qi",
+                            "--query-indent",
+                            type=int,
+                            action="store",
+                            dest="query_indent",
+                            help="Indentation for JMESPath query result")
 
     # groups
     groups_parser = subparsers.add_parser('groups', description='List groups')
