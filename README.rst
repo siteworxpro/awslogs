@@ -1,15 +1,8 @@
 awslogs
 =======
 
-.. image:: https://badge.fury.io/py/awslogs.png
-  :target: http://badge.fury.io/py/awslogs
-
-.. image:: https://travis-ci.org/jorgebastida/awslogs.png?branch=master
-    :target: https://travis-ci.org/jorgebastida/awslogs
-
-.. image:: https://coveralls.io/repos/jorgebastida/awslogs/badge.svg
-  :target: https://coveralls.io/r/jorgebastida/awslogs
-
+.. image:: https://travis-ci.org/siteworxpro/awslogs.svg?branch=master
+    :target: https://travis-ci.org/siteworxpro/awslogs
 
 ``awslogs`` is a simple command line tool for querying groups, streams and events from `Amazon CloudWatch <http://aws.amazon.com/cloudwatch/>`_ logs.
 
@@ -58,21 +51,17 @@ Example
 
 Running: ``awslogs get /var/logs/syslog ALL -s1d`` will return you events from any ``stream`` in the ``/var/logs/syslog`` group generated in the last day.
 
-.. image:: https://github.com/jorgebastida/awslogs/raw/master/media/screenshot.png
+.. image:: https://github.com/siteworxpro/awslogs/raw/master/media/screenshot.png
 
 
 Installation
 ------------
 
-You can easily install ``awslogs`` using ``pip``::
+You can easily install using `setup.py`::
 
-  $ pip install awslogs
-
-If you are on OSX El Capitan, use the following (Why? Check Donald Stufft's comment `here <https://github.com/pypa/pip/issues/3165#issuecomment-145856429>`_) ::
-
-  $ pip install awslogs --ignore-installed six
-
-
+  $ git clone https://github.com/siteworxpro/awslogs
+  $ cd awslogs
+  $ python setup.py install
 
 Options
 -------
