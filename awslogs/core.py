@@ -195,7 +195,23 @@ class AWSLogs(object):
                     message = self.query_expression.search(parsed)
                     if not isinstance(message, six.string_types):
                         message = json.dumps(message, indent=self.query_indent)
-                output.append(message.rstrip())
+
+                if re.search('ERROR', message, re.IGNORECASE):
+                    output.append(
+                        self.color(
+                            message.rstrip(),
+                            color='white', on_color='on_red'
+                        )
+                    )
+                elif re.search('WARNING', message, re.IGNORECASE):
+                    output.append(
+                        self.color(
+                            message.rstrip(),
+                            'yellow'
+                        )
+                    )
+                else:
+                    output.append(message.rstrip())
 
                 print(' '.join(output))
                 try:
@@ -251,10 +267,10 @@ class AWSLogs(object):
                         min(stream['lastEventTimestamp'], window_end):
                     yield stream['logStreamName']
 
-    def color(self, text, color):
+    def color(self, text, color, on_color=None):
         """Returns coloured version of ``text`` if ``color_enabled``."""
         if self.color_enabled:
-            return colored(text, color)
+            return colored(text, color, on_color=on_color)
         return text
 
     def parse_datetime(self, datetime_text):

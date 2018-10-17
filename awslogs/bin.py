@@ -198,7 +198,7 @@ def main(argv=None):
         sys.stderr.write("\n")
         sys.stderr.write("=" * 80)
         sys.stderr.write("\nYou've found a bug! Please, raise an issue attaching the following traceback\n")
-        sys.stderr.write("https://github.com/jorgebastida/awslogs/issues/new\n")
+        sys.stderr.write("https://github.com/siteworxpro/awslogs/issues/new\n")
         sys.stderr.write("-" * 80)
         sys.stderr.write("\n")
         sys.stderr.write("Version: {0}\n".format(__version__))
